@@ -57,3 +57,6 @@ server.js
 Stremio*.exe
 
 rcedit-x86.exe
+/cmake-build-release/
+/cmake-build-debug/
+.idea

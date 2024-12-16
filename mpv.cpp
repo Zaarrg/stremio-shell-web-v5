@@ -111,7 +111,7 @@ MpvObject::MpvObject(QQuickItem * parent)
   // Request Multimedia Class Schedule Service.
   DwmEnableMMCSS(TRUE);
 #endif
-    
+
     if (!mpv)
         throw std::runtime_error("could not create mpv context");
 
@@ -163,7 +163,7 @@ void MpvObject::initialize_mpv() {
     // Visible app / stream names
     mpv::qt::set_property(mpv, "audio-client-name", QCoreApplication::applicationName());
     mpv::qt::set_property(mpv, "title", QCoreApplication::applicationName());
- 
+
     // Don't stop on audio output issues
     mpv::qt::set_property(mpv, "audio-fallback-to-null", "yes");
 
@@ -260,7 +260,7 @@ void MpvObject::handle_mpv_event(mpv_event *event) {
             case MPV_FORMAT_STRING:
                 eventJson["data"] = QString(*(char **)prop->data);
                 break;
-            default: 
+            default:
                 break;
             }
 

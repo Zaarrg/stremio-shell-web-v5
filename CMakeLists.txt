@@ -11,6 +11,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMakeModules/")
 
 add_definitions(-DSTREMIO_SHELL_VERSION="${PROJECT_VERSION}"  -DUNICODE -D_UNICODE)
 
+add_definitions(-DCMAKE_TOOLCHAIN_FILE=C:/bin/vcpkg/scripts/buildsystems/vcpkg.cmake)
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -38,7 +40,14 @@ if(WIN32)
   list(APPEND SOURCES deps/chroma/chroma stremio.rc)
   set(QT_DEFAULT_MAJOR_VERSION 5)
   set(ENV{Qt5_DIR} $ENV{QTDIR})
-  set(MPV_LIBRARY_mpv ${CMAKE_CURRENT_SOURCE_DIR}/deps/libmpv/win32/mpv.lib)
+  # Check if the system is 64-bit
+  if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    # 64-bit system
+    set(MPV_LIBRARY_mpv ${CMAKE_CURRENT_SOURCE_DIR}/deps/libmpv/win32-x64/mpv.lib)
+  else()
+    # 32-bit system
+    set(MPV_LIBRARY_mpv ${CMAKE_CURRENT_SOURCE_DIR}/deps/libmpv/win32/mpv.lib)
+  endif()
 endif()
 
 if(APPLE)

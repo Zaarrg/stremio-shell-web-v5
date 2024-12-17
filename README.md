@@ -1,3 +1,8 @@
+## ⚠️ **Fork Disclaimer**
+- 🚧 **Work in Progress:** This is a fork of the official [Stremio Shell](https://github.com/Stremio/stremio-shell).
+- ✨ **Primary Goal:** Support for stremio web v5 and qt6 port.
+- ⚠️ **Caution:** Stuff might break frequently.
+
 ## Build
 
 ### Build instructions for Mac OS X

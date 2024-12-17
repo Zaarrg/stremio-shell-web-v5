@@ -5,13 +5,15 @@ if(APPLE)
   set(HAVE_FLAG_SEARCH_PATHS_FIRST 0)
 endif()
 
-project(stremio VERSION "4.4.168")
+project(stremio VERSION "5.0.0")
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMakeModules/")
 
 add_definitions(-DSTREMIO_SHELL_VERSION="${PROJECT_VERSION}"  -DUNICODE -D_UNICODE)
 
-add_definitions(-DCMAKE_TOOLCHAIN_FILE=C:/bin/vcpkg/scripts/buildsystems/vcpkg.cmake)
+if(WIN32)
+  add_definitions(-DCMAKE_TOOLCHAIN_FILE=C:/bin/vcpkg/scripts/buildsystems/vcpkg.cmake)
+endif()
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -35,7 +37,7 @@ set(SOURCES
   qml.qrc
 )
 
-set(MPV_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/deps/libmpv/include)
+set(MPV_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/deps/libmpv/i686/include)
 if(WIN32)
   list(APPEND SOURCES deps/chroma/chroma stremio.rc)
   set(QT_DEFAULT_MAJOR_VERSION 5)
@@ -43,10 +45,14 @@ if(WIN32)
   # Check if the system is 64-bit
   if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     # 64-bit system
-    set(MPV_LIBRARY_mpv ${CMAKE_CURRENT_SOURCE_DIR}/deps/libmpv/win32-x64/mpv.lib)
+    set(MPV_LIBRARY_mpv "${CMAKE_CURRENT_SOURCE_DIR}/deps/libmpv/x86_64/mpv.lib")
+    # Path to MPV DLL
+    set(MPV_DLL "${CMAKE_CURRENT_SOURCE_DIR}/deps/libmpv/x86_64/libmpv-2.dll")
   else()
     # 32-bit system
-    set(MPV_LIBRARY_mpv ${CMAKE_CURRENT_SOURCE_DIR}/deps/libmpv/win32/mpv.lib)
+    set(MPV_LIBRARY_mpv "${CMAKE_CURRENT_SOURCE_DIR}/deps/libmpv/i686/mpv.lib")
+    # Path to MPV DLL
+    set(MPV_DLL "${CMAKE_CURRENT_SOURCE_DIR}/deps/libmpv/i686/libmpv-2.dll")
   endif()
 endif()
 
@@ -135,4 +141,13 @@ target_link_libraries(${PROJECT_NAME} LINK_PUBLIC
 
 if(UNIX AND NOT APPLE)
   install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION opt/stremio)
+endif()
+
+if(WIN32)
+  # Copy MPV DLL
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+          COMMAND ${CMAKE_COMMAND} -E copy_if_different
+          "${MPV_DLL}"
+          $<TARGET_FILE_DIR:${PROJECT_NAME}>
+  )
 endif()

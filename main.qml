@@ -310,7 +310,7 @@ ApplicationWindow {
         var params = "?loginFlow=desktop"
         var args = Qt.application.arguments
         var shortVer = Qt.application.version.split('.').slice(0, 2).join('.')
-
+        var majorVersion = parseInt(Qt.application.version.split('.')[0]);
         var webuiArg = "--webui-url="
         for (var i=0; i!=args.length; i++) {
             if (args[i].indexOf(webuiArg) === 0) return args[i].slice(webuiArg.length)
@@ -321,6 +321,9 @@ ApplicationWindow {
 
         if (args.indexOf("--staging") > -1)
             return "https://staging.strem.io/#"+params
+
+        if (args.indexOf("--v5") > -1 || majorVersion >= 5)
+            return "https://web.stremio.com/#"+params
 
         return "https://app.strem.io/shell-v"+shortVer+"/#"+params;
     }

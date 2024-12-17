@@ -5,3 +5,6 @@
 	path = deps/chroma
 	url = https://github.com/Ivshti/razerchroma
 
+[submodule "deps/libmpv"]
+	path = deps/libmpv
+	url = https://github.com/Zaarrg/libmpv

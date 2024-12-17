@@ -60,3 +60,4 @@ rcedit-x86.exe
 /cmake-build-release/
 /cmake-build-debug/
 .idea
+windows/node.exe

@@ -1,3 +1,7 @@
+## ⚠️ **Archived**
+- 🚧 **Fork Stale** This fork is archived as qt5 is no longer needed. A up to date [qt6 desktop app](https://github.com/Zaarrg/stremio-desktop-v5) can be found [here](https://github.com/Zaarrg/stremio-desktop-v5).
+
+
 ## ⚠️ **Fork Disclaimer**
 - 🚧 **Work in Progress:** This is a fork of the official [Stremio Shell](https://github.com/Stremio/stremio-shell).
 - ✨ **Primary Goal:** Support for stremio web v5 and qt6 port.
